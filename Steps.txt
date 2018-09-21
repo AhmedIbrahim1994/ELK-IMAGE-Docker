@@ -8,6 +8,9 @@ Install Java 8
 	install the latest stable version of Oracle Java 8 
 	$sudo apt-get -y install oracle-java8-installer
 	
+	Check Java Version
+	$java -version
+	
 Install Elasticsearch
 	import the Elasticsearch public GPG key into apt
 	#sudo wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
@@ -22,4 +25,80 @@ Install Elasticsearch
 	sudo apt-get -y install elasticsearch
 	
 	Elasticsearch is now installed. Let's edit the configuration
-	sudo vi /etc/elasticsearch/elasticsearch.yml
+	$sudo vi /etc/elasticsearch/elasticsearch.yml
+	
+	You will want to restrict outside access to your Elasticsearch instance (port 9200), so outsiders can't read your data or shutdown your Elasticsearch cluster through the HTTP API. Find the line that specifies network.host, uncomment it, and replace its value with "localhost" so it looks like this:
+	network.host: localhost
+	
+	Now start Elasticsearch
+	$sudo service elasticsearch restart
+	
+	Then run the following command to start Elasticsearch on boot up
+	$sudo update-rc.d elasticsearch defaults 95 10
+	
+	Install Kibana
+	Create the Kibana source list:
+	$echo "deb http://packages.elastic.co/kibana/4.5/debian stable main" | sudo tee -a /etc/apt/sources.list.d/kibana-4.5.x.list
+
+	Update your apt package database:
+	$sudo apt-get update
+
+	Install Kibana with this command:
+	$sudo apt-get -y install kibana
+
+	in the Kibana configuration file, find the line that specifies server.host, and replace the IP address ("0.0.0.0" by default) with "localhost"
+	$server.host: "localhost"
+	This setting makes it so Kibana will only be accessible to the localhost. This is fine because we will use an Nginx reverse proxy to allow external access.
+	
+	Now enable the Kibana service, and start it:
+	$sudo update-rc.d kibana defaults 96 9
+	$sudo service kibana start
+	
+Install Nginx as a reverse proxy
+	install Nginx and Apache2-utils
+	$sudo apt-get install nginx apache2-utils
+	
+	Use htpasswd to create an admin user, called "elk"
+	$sudo htpasswd -c /etc/nginx/htpasswd.users elk
+	password:password
+	
+	open the Nginx default server block
+	sudo vi /etc/nginx/sites-available/default
+	
+	Delete the file's contents, and paste the following code block into the file. Be sure to update the server_name to match your server's name
+	server {
+    listen 80;
+
+    server_name example.com;
+
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/htpasswd.users;
+
+    location / {
+        proxy_pass http://localhost:5601;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;        
+    }
+}
+
+	 This configures Nginx to direct your server's HTTP traffic to the Kibana application, which is listening on localhost:5601. Also, Nginx will use the htpasswd.users file, that we created earlier, and require basic authentication.	 
+	 sudo service nginx restar
+	 
+Install Logstash
+	let's create the Logstash source list:
+	$echo 'deb http://packages.elastic.co/logstash/2.2/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash-2.2.x.list
+
+	Update your apt package database:
+	$sudo apt-get update
+		 
+	Install Logstash with this command:
+	$sudo apt-get install logstash
+	
+	Logstash is installed but it is not configured yet.
+	
+Generate SSL Certificates "In case of you are going to use *FileBeat*"
+
+Configure Logstash
