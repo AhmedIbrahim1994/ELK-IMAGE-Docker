@@ -73,6 +73,11 @@ Install Kibana
 	Install Kibana with this command:
 	$sudo apt-get -y install kibana
 
+	Install kibana manuklly,
+	get https://artifacts.elastic.co/downloads/kibana/kibana-6.4.1-amd64.deb
+	shasum -a 512 kibana-6.4.1-amd64.deb 
+	sudo dpkg -i kibana-6.4.1-amd64.deb
+	
 	in the Kibana configuration file, find the line that specifies server.host, and replace the IP address ("0.0.0.0" by default) with "localhost"
 	$server.host: "localhost"
 	This setting makes it so Kibana will only be accessible to the localhost. This is fine because we will use an Nginx reverse proxy to allow external access.
