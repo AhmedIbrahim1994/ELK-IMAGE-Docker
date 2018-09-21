@@ -1,0 +1,25 @@
+Install Java 8
+	Add the Oracle Java PPA to apt:
+	$sudo add-apt-repository -y ppa:webupd8team/java
+	
+	Update your apt package database:
+	$sudo apt-get update
+	
+	install the latest stable version of Oracle Java 8 
+	$sudo apt-get -y install oracle-java8-installer
+	
+Install Elasticsearch
+	import the Elasticsearch public GPG key into apt
+	#sudo wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+	
+	Create the Elasticsearch source list
+	echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+	
+	Update your apt package database:
+	sudo apt-get update
+	
+	Install Elasticsearch with this command:
+	sudo apt-get -y install elasticsearch
+	
+	Elasticsearch is now installed. Let's edit the configuration
+	sudo vi /etc/elasticsearch/elasticsearch.yml
