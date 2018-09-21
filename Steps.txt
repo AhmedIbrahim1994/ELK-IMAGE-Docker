@@ -74,17 +74,32 @@ Install Kibana
 	$sudo apt-get -y install kibana
 
 	Install kibana manuklly,
-	get https://artifacts.elastic.co/downloads/kibana/kibana-6.4.1-amd64.deb
+	wget https://artifacts.elastic.co/downloads/kibana/kibana-6.4.1-amd64.deb
 	shasum -a 512 kibana-6.4.1-amd64.deb 
 	sudo dpkg -i kibana-6.4.1-amd64.deb
 	
-	in the Kibana configuration file, find the line that specifies server.host, and replace the IP address ("0.0.0.0" by default) with "localhost"
+**** Change Kibana Configuration file
+	vi /etc/kibana/kibana.yml
+	server.port: 5601
+	server.host: "10.0.2.4"
+	server.name: "elkmaster1"
+	elasticsearch.url: "http://10.0.2.4:9200"
+
+****in the Kibana configuration file, 
+	find the line that specifies server.host,
+	and replace the IP address ("0.0.0.0" by default) with "localhost"
 	$server.host: "localhost"
 	This setting makes it so Kibana will only be accessible to the localhost. This is fine because we will use an Nginx reverse proxy to allow external access.
 	
 	Now enable the Kibana service, and start it:
 	$sudo update-rc.d kibana defaults 96 9
 	$sudo service kibana start
+	
+	Restart Kibana
+	systemctl daemon-reload
+	systemctl enable kibana.service
+	systemctl start kibana.service
+
 	
 Install Nginx as a reverse proxy
 	install Nginx and Apache2-utils
