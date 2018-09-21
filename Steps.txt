@@ -33,7 +33,7 @@ Install Elasticsearch
     """
 
 
-Let us change the following settings in /etc/elasticsearch/elasticsearch.yml:
+	Let us change the following settings in /etc/elasticsearch/elasticsearch.yml:
 	
 	
 	Elasticsearch is now installed. Let's edit the configuration
