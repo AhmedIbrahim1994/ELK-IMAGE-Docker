@@ -39,19 +39,34 @@ Install Elasticsearch
 	Elasticsearch is now installed. Let's edit the configuration
 	$sudo vi /etc/elasticsearch/elasticsearch.yml
 	
-	You will want to restrict outside access to your Elasticsearch instance (port 9200), so outsiders can't read your data or shutdown your Elasticsearch cluster through the HTTP API. Find the line that specifies network.host, uncomment it, and replace its value with "localhost" so it looks like this:
+	You will want to restrict outside 
+	access to your Elasticsearch instance (port 9200), 
+	so outsiders can't read your data or shutdown your Elasticsearch cluster through the HTTP API. 
+	Find the line that specifies network.host, uncomment it, and replace its value with "localhost" so it looks like this:
+	'''
 	network.host: localhost
+	'''
+	Optional,
+	cluster.name: linuxacademy-elk
+	node.name: elkmaster1
+	node.attr.rack: centos7
+	network.host: 10.0.2.4
+	http.port: 9200
+	node.max_local_storage_nodes: 1
 	
 	Now start Elasticsearch
 	$sudo service elasticsearch restart
 	
 	Then run the following command to start Elasticsearch on boot up
 	$sudo update-rc.d elasticsearch defaults 95 10
+----------- Done Succssefully ----------	
+Install Kibana
+	Download and install the public signing key
+	wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -	
+	sudo apt-get install apt-transport-https
+	echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
 	
-	Install Kibana
-	Create the Kibana source list:
-	$echo "deb http://packages.elastic.co/kibana/4.5/debian stable main" | sudo tee -a /etc/apt/sources.list.d/kibana-4.5.x.list
-
+	
 	Update your apt package database:
 	$sudo apt-get update
 
