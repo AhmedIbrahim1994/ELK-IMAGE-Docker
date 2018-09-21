@@ -24,6 +24,18 @@ Install Elasticsearch
 	Install Elasticsearch with this command:
 	sudo apt-get -y install elasticsearch
 	
+	"""
+	The main configuration file is located at this path: /etc/elasticsearch/elasticsearch.yml
+
+	The Systemd service file is located here: /usr/lib/systemd/system/elasticsearch.service
+
+	To override default values, add them to: /etc/systemd/system/elasticsearch.service.d/elasticsearch.conf
+    """
+
+
+Let us change the following settings in /etc/elasticsearch/elasticsearch.yml:
+	
+	
 	Elasticsearch is now installed. Let's edit the configuration
 	$sudo vi /etc/elasticsearch/elasticsearch.yml
 	
