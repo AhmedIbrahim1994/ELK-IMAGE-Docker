@@ -13,10 +13,10 @@ Install Java 8
 	
 Install Elasticsearch
 	import the Elasticsearch public GPG key into apt
-	#sudo wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-	
+	wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
 	Create the Elasticsearch source list
-	echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+	echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
 	
 	Update your apt package database:
 	sudo apt-get update
@@ -96,9 +96,9 @@ Install Kibana
 	$sudo service kibana start
 	
 	Restart Kibana
-	systemctl daemon-reload
-	systemctl enable kibana.service
-	systemctl start kibana.service
+	sudo systemctl daemon-reload
+	sudo systemctl enable kibana.service
+	sudo systemctl start kibana.service
 
 	
 Install Nginx as a reverse proxy
