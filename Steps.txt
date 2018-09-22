@@ -80,6 +80,8 @@ Install Kibana
 	shasum -a 512 kibana-6.4.1-amd64.deb 
 	sudo dpkg -i kibana-6.4.1-amd64.deb
 	
+	
+	
 **** Change Kibana Configuration file
 	vi /etc/kibana/kibana.yml
 	server.port: 5601
@@ -102,6 +104,8 @@ Install Kibana
 	sudo systemctl enable kibana.service
 	sudo systemctl start kibana.service
 
+	http://127.0.0.1:5601/status
+	
 	
 Install Nginx as a reverse proxy
 	install Nginx and Apache2-utils
@@ -150,4 +154,13 @@ Install Logstash
 	
 Generate SSL Certificates "In case of you are going to use *FileBeat*"
 
-Configure Logstash
+Configure Logstash,
+
+
+
+
+
+
+install filebeat
+	curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.4.1-amd64.deb
+	sudo dpkg -i filebeat-6.4.1-amd64.deb
