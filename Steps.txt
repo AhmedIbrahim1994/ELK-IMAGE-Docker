@@ -164,3 +164,12 @@ Configure Logstash,
 install filebeat
 	curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.4.1-amd64.deb
 	sudo dpkg -i filebeat-6.4.1-amd64.deb
+	service filebeat status
+	
+	The default data is configured in /etc/filebeat/filebeat.yml
+	'''
+	- input_type: log
+	# Paths that should be crawled and fetched. Glob based paths.
+	  paths:
+    - /var/log/*.log
+	'''
