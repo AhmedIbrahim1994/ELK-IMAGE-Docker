@@ -1,0 +1,9 @@
+POST /virustotal/product/1
+{
+ "name": "d5fca08d54f59649b93b66a781b22998955f2bd701244fcfd650c00daa9e948c",
+ "detectedby":{
+ "Bkav": "None",
+ "TrendMicro-HouseCall": "None",
+ "TrendMicro": "None", 
+ "McAfee-GW-Edition": "None"}
+} 
